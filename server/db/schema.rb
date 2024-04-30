@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_30_142952) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_30_171612) do
   create_table "devise_api_tokens", force: :cascade do |t|
     t.string "resource_owner_type", null: false
     t.bigint "resource_owner_id", null: false
@@ -28,9 +28,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_30_142952) do
   end
 
   create_table "ordered_products", force: :cascade do |t|
-    t.string "name"
-    t.integer "amount"
-    t.integer "order_id"
     t.float "price"
     t.string "adress"
     t.string "postal_code"
@@ -38,6 +35,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_30_142952) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "accept"
+    t.string "products"
   end
 
   create_table "products", force: :cascade do |t|
