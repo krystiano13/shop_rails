@@ -27,6 +27,24 @@ class ProductController < ApplicationController
         end
     end
 
+    def update
+        product = Product.find_by(id: params[:id])
+
+        if product.present?
+            product.update(product_params)
+            render json: {
+                message: "Product updated successfully",
+            }
+        else
+            render json: {
+                error: "Product could not be updated"
+            }
+        end
+    end
+
+    def destroy
+    end
+
     private 
     def product_params
         params.require(:product).permit(:name, :price, :user, :product_id, :amount)
