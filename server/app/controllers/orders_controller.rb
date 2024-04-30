@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
     @orders = OrderedProduct.find_by(order_id: params[:id])
 
     if @orders.present?
-        #accept
+        @orders.update(accept: true)
     else
         render json: {
             error: "Order not found"
