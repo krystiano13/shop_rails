@@ -31,11 +31,19 @@ class OrdersController < ApplicationController
   end
 
   def accept
+    @orders = OrderedProduct.find_by(order_id: params[:id])
 
+    if @orders.present?
+        #accept
+    else
+        render json: {
+            error: "Order not found"
+        }
+    end
   end
 
   private
   def order_params
-    params.require(:order).permit(:name, :amount, :order_id, :price, :adress, :postal_code, :person_name)
+    params.require(:order).permit(:name, :amount, :order_id, :price, :adress, :postal_code, :person_name, :accept)
   end
 end

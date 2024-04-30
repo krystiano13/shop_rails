@@ -6,4 +6,5 @@ class OrderedProduct < ApplicationRecord
     validates :adress, presence: true
     validates :postal_code, presence: true
     validates :person_name, presence: true
+    validates :accept, presence: true
 end
