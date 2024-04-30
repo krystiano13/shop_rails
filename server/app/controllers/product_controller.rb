@@ -14,6 +14,21 @@ class ProductController < ApplicationController
     end
 
     def create
-    
+        product = Product.new(product_params)
+
+        if product.save!
+            render json: {
+                message: "Product created successfully",
+            }
+        else
+            render json: {
+                error: "Product could not be created"
+            }
+        end
+    end
+
+    private 
+    def product_params
+        params.require(:product).permit(:name, :price, :user, :product_id, :amount)
     end
 end
