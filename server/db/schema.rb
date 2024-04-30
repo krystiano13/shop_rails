@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_30_133801) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_30_134232) do
   create_table "devise_api_tokens", force: :cascade do |t|
     t.string "resource_owner_type", null: false
     t.bigint "resource_owner_id", null: false
@@ -25,6 +25,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_30_133801) do
     t.index ["previous_refresh_token"], name: "index_devise_api_tokens_on_previous_refresh_token"
     t.index ["refresh_token"], name: "index_devise_api_tokens_on_refresh_token"
     t.index ["resource_owner_type", "resource_owner_id"], name: "index_devise_api_tokens_on_resource_owner"
+  end
+
+  create_table "ordered_products", force: :cascade do |t|
+    t.string "name"
+    t.integer "amount"
+    t.integer "order_id"
+    t.float "price"
+    t.string "adress"
+    t.string "postal_code"
+    t.string "person_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "products", force: :cascade do |t|
