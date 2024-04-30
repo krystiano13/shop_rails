@@ -6,7 +6,7 @@ import { Navbar } from "./components/Navbar";
 function App() {
 
   return (
-    <main className="w-[100vw] min-h-[100vh]">
+    <main className="w-[100vw] min-h-[100vh] bg-gray-100 dark:bg-gray-950">
       <BrowserRouter>
         <Navbar />
         <Routes>
