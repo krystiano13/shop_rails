@@ -1,11 +1,18 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
 export function Register() {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (authContext.auth.is_logged_in) {
+      navigate("/");
+    }
+  }, [authContext.auth]);
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const body = new FormData(e.target as HTMLFormElement);
@@ -19,14 +26,16 @@ export function Register() {
       .then((data) => {
         if (data.error_description) {
           setErrors(data.error_description);
-        }
-        else {
+        } else {
           authContext.setAuth({
             user: data.resource_owner.email,
             token: data.token,
             refresh_token: data.refresh_token,
             is_logged_in: true,
           });
+
+          localStorage.setItem("refresh_token", data.refresh_token);
+
           navigate("/");
         }
       });

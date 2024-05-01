@@ -1,6 +1,47 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 export function Login() {
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+
+  const [errors, setErrors] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (authContext.auth.is_logged_in) {
+      navigate("/");
+    }
+  }, [authContext.auth]);
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const body = new FormData(e.target as HTMLFormElement);
+    setErrors([]);
+
+    fetch("http://localhost:3000/users/tokens/sign_in", {
+      method: "POST",
+      body: body,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error_description) {
+          setErrors(data.error_description);
+        } else {
+          authContext.setAuth({
+            user: data.resource_owner.email,
+            token: data.token,
+            refresh_token: data.refresh_token,
+            is_logged_in: true,
+          });
+
+          localStorage.setItem("refresh_token", data.refresh_token);
+
+          navigate("/");
+        }
+      });
+  }
+
   return (
     <div className="w-[100vw] h-[100vh] flex justify-center items-center">
       <div className="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -13,11 +54,12 @@ export function Login() {
             Login
           </p>
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="w-full mt-4">
               <input
-                className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-red-400 dark:focus:border-red-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-red-300"
+                className="block w-full px-4 py-2 mt-2 text-gray-100 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-red-400 dark:focus:border-red-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-red-300"
                 type="email"
+                name="email"
                 placeholder="Email Address"
                 aria-label="Email Address"
               />
@@ -25,8 +67,9 @@ export function Login() {
 
             <div className="w-full mt-4">
               <input
-                className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-red-400 dark:focus:border-red-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-red-300"
+                className="block w-full px-4 py-2 mt-2 text-gray-100 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-red-400 dark:focus:border-red-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-red-300"
                 type="password"
+                name="password"
                 placeholder="Password"
                 aria-label="Password"
               />
@@ -44,6 +87,9 @@ export function Login() {
                 Sign In
               </button>
             </div>
+            {errors.map((item) => (
+              <p className="text-red-500 text-center mt-2">{item}</p>
+            ))}
           </form>
         </div>
 

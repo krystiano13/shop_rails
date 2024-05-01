@@ -5,6 +5,16 @@ import { AuthContext } from "../contexts/AuthContext";
 export function Navbar() {
   const auth = useContext(AuthContext);
 
+  function logout() {
+    localStorage.removeItem("refresh_token");
+    auth.setAuth({
+      user: "",
+      token: "",
+      refresh_token: "",
+      is_logged_in: false,
+    });
+  }
+
   return (
     <nav className="w-[100vw] bg-white shadow dark:bg-gray-800 fixed">
       <div className="container flex items-center justify-center p-6 mx-auto text-gray-600 capitalize dark:text-gray-300">
@@ -42,12 +52,12 @@ export function Navbar() {
               Cart (0.00$)
             </NavLink>
 
-            <NavLink
-              to="/"
+            <button
+              onClick={logout}
               className="border-b-2 border-transparent hover:text-gray-800 transition-colors duration-300 transform dark:hover:text-gray-200 hover:border-red-500 mx-1.5 sm:mx-6"
             >
-              log Out
-            </NavLink>
+              Log Out
+            </button>
           </>
         )}
       </div>

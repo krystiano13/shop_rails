@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 interface Auth {
   user: string;
@@ -33,6 +33,29 @@ interface Props {
 
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const [auth, setAuth] = useState<Auth>(defaultValue);
+
+  useEffect(() => {
+    if (!localStorage.getItem("refresh_token")) return;
+
+    fetch("http://localhost:3000/users/tokens/refresh", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("refresh_token") as string}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.token) {
+          setAuth({
+            user: data.resource_owner.email,
+            token: data.token,
+            refresh_token: data.refresh_token,
+            is_logged_in: true,
+          });
+        }
+      });
+  }, []);
+
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {children}
