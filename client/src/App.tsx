@@ -9,7 +9,6 @@ import { Navbar } from "./components/Navbar";
 import { AuthContextProvider } from "./contexts/AuthContext";
 
 function App() {
-
   return (
     <AuthContextProvider>
       <main className="dark w-[100vw] min-h-[100vh] bg-gray-100 dark:bg-gray-950">
