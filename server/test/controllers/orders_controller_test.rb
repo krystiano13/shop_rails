@@ -18,4 +18,9 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
     @order = OrderedProduct.new(data)
     assert @order.save!
   end
+
+  test "Are orders accepted" do
+    @orders = OrderedProduct.all
+    assert @orders.update(accept: true)
+  end
 end
