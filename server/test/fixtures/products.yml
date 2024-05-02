@@ -3,13 +3,13 @@
 one:
   name: MyString
   price: 1.5
-  user: MyString
+  user: test1@test.pl
   product_id: 1
   amount: 1
 
 two:
   name: MyString
   price: 1.5
-  user: MyString
+  user: test1@test.pl
   product_id: 1
   amount: 1
