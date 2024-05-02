@@ -1,19 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  amount: 1
-  order_id: 1
   price: 1.5
+  products: MyString
   adress: MyString
   postal_code: MyString
   person_name: MyString
+  accept: false
 
 two:
-  name: MyString
-  amount: 1
-  order_id: 1
   price: 1.5
   adress: MyString
+  products: MyString
   postal_code: MyString
   person_name: MyString
+  accept: false
