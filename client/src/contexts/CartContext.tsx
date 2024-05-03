@@ -10,12 +10,15 @@ interface Product {
   amount: number;
 }
 
-export const CartContext = createContext({});
+export const CartContext = createContext<{
+  cart: Product[];
+  setCart: (cart: Product[]) => void;
+}>({ cart: [], setCart: () => {} });
 
 export const CartContextProvider: React.FC<Props> = ({ children }) => {
   const [cart, setCart] = useState<Product[]>([]);
   return (
-    <CartContext.Provider value={{ cart, setCart }}>
+    <CartContext.Provider value={{ cart: cart, setCart: setCart }}>
       {children}
     </CartContext.Provider>
   );

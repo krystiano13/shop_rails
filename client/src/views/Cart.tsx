@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { CartItem } from "../components/CartItem";
+import { CartContext } from "../contexts/CartContext";
 
 export function Cart() {
+  const cartContext = useContext(CartContext);
   return (
     <div className="w-[100vw] h-[100vh] pt-24 p-4 overflow-y-auto flex flex-col md:flex-row gap-6 justify-between items-center md:items-start">
       <table className="block rounded-lg max-h-[80vh] overflow-y-auto bg-gray-800 max-w-[95vw] md:max-w-[45%]">
@@ -13,8 +16,9 @@ export function Cart() {
           <th className="text-white md:text-lg text-start p-3 md:p-5">Price</th>
           <th className="text-white md:text-lg text-start p-3 md:p-5">Total</th>
         </tr>
-        <CartItem />
-        <CartItem />
+        {cartContext.cart.map((item) => (
+          <CartItem name={item.name} price={item.price} amount={item.amount} />
+        ))}
       </table>
       <section
         className="flex flex-col justify-start items-start gap-4 rounded-lg max-h-[80vh] overflow-y-auto bg-gray-800 w-[90vw] md:w-[45%] max-w-[95vw] md:max-w-[45%]"
