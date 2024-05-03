@@ -15,6 +15,7 @@ export function Cart() {
           </th>
           <th className="text-white md:text-lg text-start p-3 md:p-5">Price</th>
           <th className="text-white md:text-lg text-start p-3 md:p-5">Total</th>
+          <th className="text-white md:text-lg text-start p-3 md:p-5"></th>
         </tr>
         {cartContext.cart.map((item) => (
           <CartItem name={item.name} price={item.price} amount={item.amount} />

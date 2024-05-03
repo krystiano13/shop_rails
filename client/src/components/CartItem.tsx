@@ -26,6 +26,12 @@ export const CartItem:React.FC<Props> = ({ name, price, amount }) => {
       <td className="p-3 md:p-5">
         <p className="text-white md:text-lg">${price * amount}</p>
       </td>
+      <td className="p-3 md:p-5">
+        <button
+          className="text-white p-1 pl-5 pr-5 bg-red-700 hover:bg-red-600 transition-colors">
+          Delete
+        </button>
+      </td>
     </tr>
   );
 }
