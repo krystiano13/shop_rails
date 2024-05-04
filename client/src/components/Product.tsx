@@ -13,51 +13,37 @@ export const Product: React.FC<Props> = (props) => {
   const authContext = useContext(AuthContext);
   const cartContext = useContext(CartContext);
 
-  const [amount, setAmount] = useState<number>(1);
-
   async function addToCart() {
     if (!authContext.auth.is_logged_in) return;
+
     const user: string = authContext.auth.user;
-    let url = `/products/add/${user}`;
+    let amount = 1;
 
     if (cartContext.cart.some((item) => item.name === props.name)) {
       const index = cartContext.cart.findIndex(
-        (item) => item.name === props.name
+        (product) => product.name === props.name
       );
 
-      setAmount(cartContext.cart[index].amount + 1);
-      url = `/products/edit/${user}/${props.name}`;
+      amount = cartContext.cart[index].amount + 1;
     }
-
-    await fetch(`http://127.0.0.1:3000${url}`, {
+    
+    await fetch("http://127.0.0.1:3000/products/add", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${authContext.auth.token}`,
         "Content-Type": "application/json",
+        Authorization: `Bearer ${authContext.auth.token}`,
       },
       body: JSON.stringify({
+        user,
         name: props.name,
         amount: amount,
         price: props.price,
-        user: authContext.auth.user,
         product_id: 1,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (!data.error) {
-          fetch(`http://127.0.0.1:3000/products/${user}`, {
-            headers: {
-              Authorization: `Bearer ${authContext.auth.token}`,
-              "Content-Type": "application/json",
-            },
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              console.log(data);
-              cartContext.setCart(data);
-            });
-        }
+        console.log(data);
       });
   }
 

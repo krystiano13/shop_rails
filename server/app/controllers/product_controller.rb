@@ -16,15 +16,25 @@ class ProductController < ApplicationController
     end
 
     def create
-        @product = Product.new(product_params)
-        if @product.save!
+        @products = Product.where(user: params[:user], name: params[:name]);
+
+        if @products.present?
+            @products.update(product_params)
             render json: {
-                message: "Product created successfully",
-            }, status: :ok
+                message: "Product updated successfully",
+            }
         else
-            render json: {
-                error: "Product could not be created"
-            }, status: :unprocessable_entity
+            @product = Product.new(product_params)
+
+            if @product.save!
+                render json: {
+                    message: "Product created successfully",
+                }, status: :ok
+            else
+                render json: {
+                    error: "Product could not be created"
+                }, status: :unprocessable_entity
+            end
         end
     end
 

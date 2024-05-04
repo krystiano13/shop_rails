@@ -30,7 +30,7 @@ export const CartContextProvider: React.FC<Props> = ({ children }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        setCart(data.products);
       });
   }, [authContext.auth.is_logged_in]);
 

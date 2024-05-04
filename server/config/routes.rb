@@ -5,8 +5,8 @@ Rails.application.routes.draw do
 
   #products
   get "products/", to: "product#index", as: :products
-  post "products/add/:user", to: "product#create", as: :add_product
-  put "products/edit/:user/:name", to: "product#update", as: :edit_product
+  post "products/add/", to: "product#create", as: :add_product
+  put "products/edit/", to: "product#update", as: :edit_product
   delete "products/delete/:id", to: "product#destroy", as: :delete_product
 
   #ordered_products
