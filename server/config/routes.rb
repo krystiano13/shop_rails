@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   #products
-  get "products/:user", to: "product#index", as: :products
+  get "products/", to: "product#index", as: :products
   post "products/add/:user", to: "product#create", as: :add_product
   put "products/edit/:user/:name", to: "product#update", as: :edit_product
   delete "products/delete/:id", to: "product#destroy", as: :delete_product

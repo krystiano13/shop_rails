@@ -1,12 +1,12 @@
 class ProductController < ApplicationController
     skip_before_action :verify_authenticity_token, raise: false  
-    before_action :authenticate_devise_api_token!, except: [:index]
+    before_action :authenticate_devise_api_token!
     def index
-        @products = Product.where(user: params[:user])
+        products = Product.where(user: params[:user])
 
-        if @products.present?
+        if products.present?
             render json: {
-                products: @products
+                products: products
             }, status: :ok
         else
             render json: {

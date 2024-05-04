@@ -23,7 +23,7 @@ export const CartContextProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if(!authContext.auth.is_logged_in) return;
-    fetch(`http://127.0.0.1:3000/products/${authContext.auth.user}`, {
+    fetch(`http://127.0.0.1:3000/products?user=${authContext.auth.user}`, {
       headers: {
         Authorization: `Bearer ${authContext.auth.token}`,
       },
