@@ -6,7 +6,7 @@ class ProductController < ApplicationController
 
         if @products.present?
             render json: {
-                products: products
+                products: @products
             }, status: :ok
         else
             render json: {
@@ -17,7 +17,6 @@ class ProductController < ApplicationController
 
     def create
         @product = Product.new(product_params)
-
         if @product.save!
             render json: {
                 message: "Product created successfully",
@@ -30,7 +29,7 @@ class ProductController < ApplicationController
     end
 
     def update
-        @product = Product.find_by(id: params[:id])
+        @product = Product.where(user: params[:user], name: params[:name])
 
         if @product.present?
             @product.update(product_params)

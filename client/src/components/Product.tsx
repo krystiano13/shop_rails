@@ -1,15 +1,66 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { CartContext } from "../contexts/CartContext";
 
 interface Props {
-    name: string;
-    price: number;
-    img: string;
-    description: string;
+  name: string;
+  price: number;
+  img: string;
+  description: string;
 }
 
 export const Product: React.FC<Props> = (props) => {
   const authContext = useContext(AuthContext);
+  const cartContext = useContext(CartContext);
+
+  const [amount, setAmount] = useState<number>(1);
+
+  async function addToCart() {
+    if (!authContext.auth.is_logged_in) return;
+    const user: string = authContext.auth.user;
+    let url = `/products/add/${user}`;
+
+    if (cartContext.cart.some((item) => item.name === props.name)) {
+      const index = cartContext.cart.findIndex(
+        (item) => item.name === props.name
+      );
+
+      setAmount(cartContext.cart[index].amount + 1);
+      url = `/products/edit/${user}/${props.name}`;
+    }
+
+    await fetch(`http://127.0.0.1:3000${url}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${authContext.auth.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: props.name,
+        amount: amount,
+        price: props.price,
+        user: authContext.auth.user,
+        product_id: 1,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          fetch(`http://127.0.0.1:3000/products/${user}`, {
+            headers: {
+              Authorization: `Bearer ${authContext.auth.token}`,
+              "Content-Type": "application/json",
+            },
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              cartContext.setCart(data);
+            });
+        }
+      });
+  }
+
   return (
     <div className="max-w-xs overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
       <div className="px-4 py-2">
@@ -30,11 +81,14 @@ export const Product: React.FC<Props> = (props) => {
       <div className="flex items-center justify-between px-4 py-2 bg-gray-900">
         <h1 className="text-lg font-bold text-white">${props.price}</h1>
         {authContext.auth.is_logged_in && (
-          <button className="px-2 py-1 text-xs font-semibold text-gray-900 uppercase transition-colors duration-300 transform bg-white rounded hover:bg-gray-200 focus:bg-gray-400 focus:outline-none">
+          <button
+            onClick={addToCart}
+            className="px-2 py-1 text-xs font-semibold text-gray-900 uppercase transition-colors duration-300 transform bg-white rounded hover:bg-gray-200 focus:bg-gray-400 focus:outline-none"
+          >
             Add to cart
           </button>
         )}
       </div>
     </div>
   );
-}
+};

@@ -28,7 +28,7 @@ class ProductControllerTest < ActionDispatch::IntegrationTest
       :amount => products(:one).amount + 1
     }
 
-    product = Product.find(products(:one).id)
+    product = Product.find_by(user: products(:one).user, name: products(:one).name)
     assert product.update(data)
   end
 
