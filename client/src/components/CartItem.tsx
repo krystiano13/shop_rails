@@ -36,7 +36,11 @@ export const CartItem: React.FC<Props> = ({ name, price, amount, id }) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        if (!data.error) {
+          cartContext.setCart(data.products);
+        } else {
+          alert("Something went wrong");
+        }
       });
   }
 
