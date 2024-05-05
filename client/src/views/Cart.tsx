@@ -18,7 +18,12 @@ export function Cart() {
           <th className="text-white md:text-lg text-start p-3 md:p-5"></th>
         </tr>
         {cartContext.cart.map((item) => (
-          <CartItem name={item.name} price={item.price} amount={item.amount} />
+          <CartItem
+            id={item.id}
+            name={item.name}
+            price={item.price}
+            amount={item.amount}
+          />
         ))}
       </table>
       <section
