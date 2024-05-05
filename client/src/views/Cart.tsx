@@ -59,11 +59,13 @@ export function Cart() {
             required
             placeholder="postal code"
           />
+          <p className="text-white text-xl">
+            Total: ${totalPrice.toFixed(2)}
+          </p>
+          <button type="submit" className="p-1 pl-5 pr-5 rounded-lg text-lg text-white bg-slate-700 hover:bg-slate-600 transition-colors">
+            Checkout
+          </button>
         </form>
-        <p className="text-white p-3 md:p-5 text-xl">Total: ${ totalPrice.toFixed(2) }</p>
-        <button className="m-3 p-1 pl-5 pr-5 rounded-lg text-lg md:m-5 text-white bg-slate-700 hover:bg-slate-600 transition-colors">
-          Checkout
-        </button>
       </section>
     </div>
   );

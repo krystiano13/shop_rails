@@ -13,6 +13,10 @@ export const CartItem: React.FC<Props> = ({ name, price, amount, id }) => {
   const authContext = useContext(AuthContext);
   const cartContext = useContext(CartContext);
 
+  async function updateRecord() {
+    
+  }
+
   async function deleteRecord() {
     if (!authContext.auth.is_logged_in) return;
     await fetch(`http://127.0.0.1:3000/products/delete/${id}`, {
