@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { CartContext } from "../contexts/CartContext";
+import { debounce } from "../utils/debounce";
 
 interface Props {
   id: number;
@@ -13,8 +14,30 @@ export const CartItem: React.FC<Props> = ({ name, price, amount, id }) => {
   const authContext = useContext(AuthContext);
   const cartContext = useContext(CartContext);
 
-  async function updateRecord() {
-    
+  async function updateRecord(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!authContext.auth.is_logged_in) return;
+
+    await fetch(
+      `http://127.0.0.1:3000/products/edit?user=${authContext.auth.user}&name=${name}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authContext.auth.token}`,
+        },
+        body: JSON.stringify({
+          user: authContext.auth.user,
+          name: name,
+          price: price,
+          amount: e.target.value,
+          product_id: 1,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   }
 
   async function deleteRecord() {
@@ -50,6 +73,7 @@ export const CartItem: React.FC<Props> = ({ name, price, amount, id }) => {
           min={1}
           defaultValue={amount}
           required
+          onChange={debounce(updateRecord, 500)}
         />
       </td>
       <td className="p-3 md:p-5">
