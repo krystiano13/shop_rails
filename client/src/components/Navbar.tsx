@@ -1,9 +1,23 @@
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { CartContext } from "../contexts/CartContext";
 
 export function Navbar() {
   const auth = useContext(AuthContext);
+  const cartContext = useContext(CartContext);
+
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  useEffect(() => {
+    let price_accumulated = 0;
+
+    cartContext.cart.forEach((item) => {
+      price_accumulated += item.price * item.amount;
+    });
+
+    setTotalPrice(price_accumulated);
+  }, [cartContext.cart]);
 
   function logout() {
     localStorage.removeItem("refresh_token");
@@ -49,7 +63,7 @@ export function Navbar() {
               to="/cart"
               className="border-b-2 border-transparent hover:text-gray-800 transition-colors duration-300 transform dark:hover:text-gray-200 hover:border-red-500 mx-1.5 sm:mx-6"
             >
-              Cart (0.00$)
+              Cart ({totalPrice}$)
             </NavLink>
 
             <button
