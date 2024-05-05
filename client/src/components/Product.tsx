@@ -26,7 +26,7 @@ export const Product: React.FC<Props> = (props) => {
 
       amount = cartContext.cart[index].amount + 1;
     }
-    
+
     await fetch("http://127.0.0.1:3000/products/add", {
       method: "POST",
       headers: {
@@ -34,7 +34,7 @@ export const Product: React.FC<Props> = (props) => {
         Authorization: `Bearer ${authContext.auth.token}`,
       },
       body: JSON.stringify({
-        user,
+        user: user,
         name: props.name,
         amount: amount,
         price: props.price,
@@ -43,7 +43,11 @@ export const Product: React.FC<Props> = (props) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        if (!data.error) {
+          cartContext.setCart(data.products);
+        } else {
+          alert("Something went wrong");
+        }
       });
   }
 

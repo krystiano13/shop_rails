@@ -20,15 +20,19 @@ class ProductController < ApplicationController
 
         if @products.present?
             @products.update(product_params)
+            products_list = Product.where(user: params[:user])
             render json: {
                 message: "Product updated successfully",
+                products: products_list
             }
         else
             @product = Product.new(product_params)
 
             if @product.save!
+                products_list = Product.where(user: params[:user])
                 render json: {
                     message: "Product created successfully",
+                    products: products_list
                 }, status: :ok
             else
                 render json: {
