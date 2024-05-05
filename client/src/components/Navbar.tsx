@@ -63,7 +63,7 @@ export function Navbar() {
               to="/cart"
               className="border-b-2 border-transparent hover:text-gray-800 transition-colors duration-300 transform dark:hover:text-gray-200 hover:border-red-500 mx-1.5 sm:mx-6"
             >
-              Cart ({totalPrice}$)
+              Cart ({totalPrice.toFixed(2)}$)
             </NavLink>
 
             <button

@@ -1,9 +1,21 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartItem } from "../components/CartItem";
 import { CartContext } from "../contexts/CartContext";
 
 export function Cart() {
   const cartContext = useContext(CartContext);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  useEffect(() => {
+    let price_accumulated = 0;
+
+    cartContext.cart.forEach((item) => {
+      price_accumulated += item.price * item.amount;
+    });
+
+    setTotalPrice(price_accumulated);
+  }, [cartContext.cart]);
+
   return (
     <div className="w-[100vw] h-[100vh] pt-24 p-4 overflow-y-auto flex flex-col md:flex-row gap-6 justify-between items-center md:items-start">
       <table className="block rounded-lg max-h-[80vh] overflow-y-auto bg-gray-800 max-w-[95vw] md:max-w-[45%]">
@@ -48,7 +60,7 @@ export function Cart() {
             placeholder="postal code"
           />
         </form>
-        <p className="text-white p-3 md:p-5 text-xl">Total: $100.00</p>
+        <p className="text-white p-3 md:p-5 text-xl">Total: ${ totalPrice.toFixed(2) }</p>
         <button className="m-3 p-1 pl-5 pr-5 rounded-lg text-lg md:m-5 text-white bg-slate-700 hover:bg-slate-600 transition-colors">
           Checkout
         </button>
