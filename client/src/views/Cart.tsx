@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { CartItem } from "../components/CartItem";
 import { AuthContext } from "../contexts/AuthContext";
 import { CartContext } from "../contexts/CartContext";
@@ -6,6 +7,7 @@ import { CartContext } from "../contexts/CartContext";
 export function Cart() {
   const cartContext = useContext(CartContext);
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
@@ -46,6 +48,7 @@ export function Cart() {
         console.log(data);
         if (!data.error) {
           cartContext.setCart([]);
+          navigate("/thanks");
         } else {
           alert("Something went wrong");
         }

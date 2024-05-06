@@ -4,6 +4,7 @@ import { Home } from "./views/Home";
 import { Login } from "./views/Login";
 import { Register } from "./views/Register";
 import { Cart } from "./views/Cart";
+import { Thanks } from "./views/Thanks";
 
 import { Navbar } from "./components/Navbar";
 
@@ -22,6 +23,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/thanks" element={<Thanks />} />
             </Routes>
           </BrowserRouter>
         </main>

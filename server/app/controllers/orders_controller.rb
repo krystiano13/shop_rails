@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_devise_api_token!
 
   def index
-    @orders = OrdereredProduct.all
+    @orders = OrderedProduct.all
 
     if @orders.present?
         render json: {
