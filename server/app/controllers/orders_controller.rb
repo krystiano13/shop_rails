@@ -17,7 +17,9 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = OrdereredProduct.new(order_params)
+    puts "Params: "
+    puts params
+    @order = OrderedProduct.new(order_params)
 
     if @order.save
         render json: {
