@@ -17,11 +17,10 @@ class OrdersController < ApplicationController
   end
 
   def create
-    puts "Params: "
-    puts params
     @order = OrderedProduct.new(order_params)
+    Product.where(user: params[:user]).destroy_all
 
-    if @order.save
+    if @order.save      
         render json: {
             message: "Order created successfully",
         }, status: :ok
