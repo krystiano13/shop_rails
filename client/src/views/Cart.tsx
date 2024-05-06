@@ -35,14 +35,17 @@ export function Cart() {
       products: JSON.stringify(cartContext.cart),
     };
 
-    await fetch(`http://localhost:3000/orders/create?user=${authContext.auth.user}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${authContext.auth.token}`,
-      },
-      body: JSON.stringify({ order: body }),
-    })
+    await fetch(
+      `http://localhost:3000/orders/create?user=${authContext.auth.user}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authContext.auth.token}`,
+        },
+        body: JSON.stringify({ order: body }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
