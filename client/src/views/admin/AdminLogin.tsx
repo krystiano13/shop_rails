@@ -1,10 +1,39 @@
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export function AdminLogin() {
+    const authContext = useContext(AuthContext);
+    const navigate = useNavigate();
     const [errors, setErrors] = useState<string[]>([]);
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        
+        e.preventDefault();
+        const body = new FormData(e.target as HTMLFormElement);
+        setErrors([]);
+
+        body.append("email", "admin@admin");
+
+        fetch("http://localhost:3000/users/tokens/sign_in", {
+          method: "POST",
+          body: body,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.error_description) {
+              setErrors(data.error_description);
+            } else {
+              authContext.setAuth({
+                user: data.resource_owner.email,
+                token: data.token,
+                refresh_token: data.refresh_token,
+                is_logged_in: true,
+              });
+
+              localStorage.setItem("refresh_token", data.refresh_token);
+
+              navigate("/");
+            }
+          });
     }
     
     return (
