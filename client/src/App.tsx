@@ -5,6 +5,8 @@ import { Login } from "./views/Login";
 import { Register } from "./views/Register";
 import { Cart } from "./views/Cart";
 import { Thanks } from "./views/Thanks";
+import { Orders } from "./views/admin/Orders";
+import { AdminLogin } from "./views/admin/AdminLogin";
 
 import { Navbar } from "./components/Navbar";
 
@@ -24,6 +26,8 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/thanks" element={<Thanks />} />
+              <Route path="/admin/orders" element={<Orders />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
             </Routes>
           </BrowserRouter>
         </main>
