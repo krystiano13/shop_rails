@@ -32,13 +32,15 @@ class OrdersController < ApplicationController
   end
 
   def accept
-    @orders = OrderedProduct.find_by(id: params[:id])
+    @orders = OrderedProduct.where(id: params[:id])
 
     if @orders.present?
-        @orders.update(accept: true)
+        @orders.update(accept_order_params)
+        orders_list = OrderedProduct.all
 
         render json: {
             message: "Order accepted successfully",
+            orders: orders_list
         }, status: :ok
     else
         render json: {
@@ -50,5 +52,10 @@ class OrdersController < ApplicationController
   private
   def order_params
     params.require(:order).permit(:products, :price, :adress, :postal_code, :person_name, :accept)
+  end
+
+  private 
+  def accept_order_params
+    params.require(:order).permit(:accept)
   end
 end

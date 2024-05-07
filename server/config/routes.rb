@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   #ordered_products
   get "orders/", to: "orders#index", as: :orders
-  put "orders/accept/:id", to: "orders#accept", as: :orders_accept
+  put "orders/accept", to: "orders#accept", as: :orders_accept
   post "orders/create", to: "orders#create", as: :orders_create
   
 end
