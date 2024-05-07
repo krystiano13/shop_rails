@@ -3,7 +3,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { OrderCard } from "../../components/OrderCard";
 
-interface Order {
+export interface Order {
   id: number;
   accept: boolean;
   created_at: string;
@@ -42,6 +42,7 @@ export function Orders() {
     <div className="w-[100vw] h-[100vh] flex flex-col justify-start items-start p-4 pt-24 gap-6">
       {orders.map((item) => (
         <OrderCard
+          setOrders={(order:Order[]) => setOrders(order)}
           key={item.id}
           person={item.person_name}
           order_id={item.id}

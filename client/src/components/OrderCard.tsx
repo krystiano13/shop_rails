@@ -1,11 +1,13 @@
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import type { Order } from "../views/admin/Orders";
 
 interface Props {
   person: string;
   order_id: number;
   products: string;
   accept: boolean;
+  setOrders: (order: Order[]) => void;
 }
 
 export const OrderCard: React.FC<Props> = ({
@@ -13,6 +15,7 @@ export const OrderCard: React.FC<Props> = ({
   order_id,
   accept,
   products,
+  setOrders,
 }) => {
   const authContext = useContext(AuthContext);
   async function acceptOrder() {
@@ -27,7 +30,7 @@ export const OrderCard: React.FC<Props> = ({
       .then((res) => res.json())
       .then((data) => {
         if (!data.error) {
-          //window.location.reload();
+          setOrders(data.orders);
         }
       });
   }
