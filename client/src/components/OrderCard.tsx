@@ -41,7 +41,7 @@ export const OrderCard: React.FC<Props> = ({
         accept ? "bg-emerald-800" : "bg-slate-800"
       } w-full flex justify-between items-center`}
     >
-      <h2 className="text-white text-xl">
+      <h2 className="text-white text-base md:text-xl max-w-3/4">
         {person} - order nr. {order_id}
       </h2>
       <div className="buttons flex items-center gap-8">

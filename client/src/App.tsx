@@ -7,6 +7,7 @@ import { Cart } from "./views/Cart";
 import { Thanks } from "./views/Thanks";
 import { Orders } from "./views/admin/Orders";
 import { AdminLogin } from "./views/admin/AdminLogin";
+import { Order } from "./views/admin/Order";
 
 import { Navbar } from "./components/Navbar";
 
@@ -28,6 +29,7 @@ function App() {
               <Route path="/thanks" element={<Thanks />} />
               <Route path="/admin/orders" element={<Orders />} />
               <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/order" element={<Order />} />
             </Routes>
           </BrowserRouter>
         </main>
