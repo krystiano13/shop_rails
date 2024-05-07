@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
 import type { Order } from "../views/admin/Orders";
 
@@ -18,6 +19,7 @@ export const OrderCard: React.FC<Props> = ({
   setOrders,
 }) => {
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
   async function acceptOrder() {
     await fetch(`http://127.0.0.1:3000/orders/accept?id=${order_id}`, {
       method: "PUT",
@@ -45,7 +47,10 @@ export const OrderCard: React.FC<Props> = ({
         {person} - order nr. {order_id}
       </h2>
       <div className="buttons flex items-center gap-8">
-        <button className="text-white p-1 pl-6 pr-6 bg-emerald-500 hover:bg-emerald-400 transition-colors">
+        <button
+          onClick={() => navigate(`/admin/order?products=${products}`)}
+          className="text-white p-1 pl-6 pr-6 bg-emerald-500 hover:bg-emerald-400 transition-colors"
+        >
           Show
         </button>
         {!accept && (
