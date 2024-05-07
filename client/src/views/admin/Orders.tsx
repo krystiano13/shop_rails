@@ -31,9 +31,8 @@ export function Orders() {
         },
       })
         .then((res) => res.json())
-        .then(data => {
-          console.log(data);
-          setOrders(data.orders as Order[]);
+        .then((data) => {
+          setOrders(() => data.orders as Order[]);
         });
     }
   }, [authContext.auth.is_logged_in]);
