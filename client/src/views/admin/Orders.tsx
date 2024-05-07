@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { OrderCard } from "../../components/OrderCard";
 
 interface Order {
   id: number;
@@ -38,6 +39,8 @@ export function Orders() {
   }, [authContext.auth.is_logged_in]);
 
   return (
-    <div className="w-[100vw] h-[100vh] flex flex-col justify-center items-start p-4 gap-6"></div>
+    <div className="w-[100vw] h-[100vh] flex flex-col justify-start items-start p-4 pt-24 gap-6">
+      
+    </div>
   );
 }
