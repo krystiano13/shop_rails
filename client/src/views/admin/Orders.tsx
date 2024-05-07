@@ -40,16 +40,20 @@ export function Orders() {
 
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col justify-start items-start p-4 pt-24 gap-6">
-      {orders.map((item) => (
-        <OrderCard
-          setOrders={(order:Order[]) => setOrders(order)}
-          key={item.id}
-          person={item.person_name}
-          order_id={item.id}
-          accept={item.accept}
-          products={item.products}
-        />
-      ))}
+      {authContext.auth.user === "admin@admin" && (
+        <>
+          {orders.map((item) => (
+            <OrderCard
+              setOrders={(order: Order[]) => setOrders(order)}
+              key={item.id}
+              person={item.person_name}
+              order_id={item.id}
+              accept={item.accept}
+              products={item.products}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 }

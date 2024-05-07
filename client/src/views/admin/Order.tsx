@@ -39,13 +39,17 @@ export function Order() {
 
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col justify-start items-start p-4 pt-24 gap-6">
-      {products.map((item) => (
-        <div className="order p-4 rounded-lg bg-slate-800 w-full flex justify-between items-center">
-          <h2 className="text-white text-base md:text-xl max-w-3/4">
-            {item.name} X{item.amount} - {item.price * item.amount}€
-          </h2>
-        </div>
-      ))}
+      {authContext.auth.user === "admin@admin" && (
+        <>
+          {products.map((item) => (
+            <div className="order p-4 rounded-lg bg-slate-800 w-full flex justify-between items-center">
+              <h2 className="text-white text-base md:text-xl max-w-3/4">
+                {item.name} X{item.amount} - {item.price * item.amount}€
+              </h2>
+            </div>
+          ))}
+        </>
+      )}
     </div>
   );
 }
