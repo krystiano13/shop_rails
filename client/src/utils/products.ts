@@ -7,7 +7,7 @@ import img6 from "../assets/img6.jpg";
 import img7 from "../assets/img7.jpg";
 import img8 from "../assets/img8.jpeg";
 
-export type product = {
+type product = {
     name: string,
     description: string,
     price: number,
